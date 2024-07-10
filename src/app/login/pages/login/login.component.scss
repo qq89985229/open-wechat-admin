@@ -1,0 +1,31 @@
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .login-header {
+    text-align: center;
+    color:#409eff;
+    i {
+      font-size: 48px;
+    }
+    h1 {
+      font-size: 20px;
+      color:#409eff;
+    }
+  }
+  .login-form {
+    max-width: 300px;
+    .login-form-margin {
+      margin-bottom: 16px;
+    }
+    nz-option {
+      background: #409eff;
+      padding: 0 80px;
+    }
+    .login-form-button {
+      width: 100%;
+    }
+  }
+}
+

@@ -1,0 +1,10 @@
+<nz-list nzItemLayout="vertical">
+  @for (category of category.categories; track category) {
+    <nz-list-item>
+      <nz-list-item-meta-title>
+        {{ category.firstName }} > {{ category.secondName }}
+      </nz-list-item-meta-title>
+      <a nz-popconfirm nzPopconfirmTitle="确定要删除吗?" (nzOnConfirm)="deleteCategory(category)">删除</a>
+    </nz-list-item>
+  }
+</nz-list>

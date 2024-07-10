@@ -1,0 +1,122 @@
+<div nz-row [nzGutter]="12" nzJustify="end" class="btn-group">
+    <div nz-col>
+      <button nz-button><i nz-icon nzType="search"></i>搜索</button>
+    </div>
+    <div nz-col>
+      <button nz-button (click)="fastRegister();"><i nz-icon nzType="plus"></i>新增</button>
+    </div>
+    <div nz-col>
+      <button nz-button (click)="getPreAuthUrl();"><i nz-icon nzType="qrcode"></i>绑定</button>
+    </div>
+    <div nz-col>
+      <button nz-button (click)="getList()"><i nz-icon nzType="reload"></i>刷新</button>
+    </div>
+</div>
+<nz-table #basicTable
+          nzBordered
+          nzShowSizeChanger
+          [nzFrontPagination]="false"
+          [nzLoading]="tableParams.loading"
+          [nzTotal]="tableParams.total"
+          [nzPageIndex]="tableParams.pageIndex"
+          [nzPageSize]="tableParams.pageSize"
+          [nzPageSizeOptions]="tableParams.nzPageSizeOptions"
+          [nzShowTotal]="totalTemplate"
+          [nzData]="authorizers"
+          [nzScroll]="{x: '1200px', y: '500px'}"
+          [nzWidthConfig] ="['180px', '300px', '200px', '200px', '140px', '120px', '100px', '100px', '100px', '140px', '200px', '200px', '140px']"
+          (nzQueryParams)="onQueryParamsChange($event)"
+>
+  <thead>
+  <tr>
+    <th nzLeft>APPID</th>
+    <th>主体名称</th>
+    <th>授权时间</th>
+    <th>基本信息</th>
+    <th>服务类目</th>
+    <th>服务器域名</th>
+    <th>业务域名</th>
+    <th>EXT配置</th>
+    <th>隐私保护</th>
+    <th>代码管理</th>
+    <th>体验管理</th>
+    <th>审核管理</th>
+    <th nzRight>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let authorizer of basicTable.data">
+    <td nzLeft>{{ authorizer.appId }}</td>
+    <td>{{ authorizer?.authorizerInfo?.authorizerInfo?.principalName}}</td>
+    <td>{{ authorizer.authTime * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+    <td><a nz-button nzType="link" (click)="getAccountBasicInfo(authorizer)">{{ authorizer?.authorizerInfo?.authorizerInfo?.nickName || '_' }}</a></td>
+    <td>
+      <nz-tag nzColor="default" (click)="getCategory(authorizer)">
+        查看
+      </nz-tag>
+      <nz-tag nzColor="default" (click)="addCategory(authorizer)">
+        添加
+      </nz-tag>
+    </td>
+    <td>
+      <nz-tag nzColor="default" (click)="setDomain(authorizer)">
+        配置
+      </nz-tag>
+    </td>
+    <td>
+      <nz-tag nzColor="default" (click)="setWebViewDomain(authorizer)">
+        配置
+      </nz-tag>
+    </td>
+    <td>
+      <nz-tag nzColor="default" (click)="setExt(authorizer)">
+        配置
+      </nz-tag>
+    </td>
+    <td>
+      <nz-tag nzColor="default" (click)="setPrivacySetting(authorizer)">
+        配置
+      </nz-tag>
+    </td>
+    <td>
+      <nz-tag nzColor="default" (click)="getPageList(authorizer)">
+        查看
+      </nz-tag>
+      <nz-tag nzColor="default" (click)="codeCommit(authorizer)">
+        上传
+      </nz-tag>
+    </td>
+    <td>
+      <nz-tag nzColor="default" (click)="getTesterList(authorizer)">
+        查看
+      </nz-tag>
+      <nz-tag nzColor="default" (click)="bindTester(authorizer)">
+        绑定
+      </nz-tag>
+      <nz-tag nzColor="default" (click)="getTestQrcode(authorizer)">
+        体验码
+      </nz-tag>
+    </td>
+    <td>
+      <nz-tag nzColor="default">
+        <a nz-popconfirm nzPopconfirmTitle="确定要提交吗?" (nzOnConfirm)="submitAudit(authorizer)">提交</a>
+      </nz-tag>
+      <nz-tag nzColor="default">
+        <a nz-popconfirm nzPopconfirmTitle="确定要撤回吗?" (nzOnConfirm)="undoCodeAudit(authorizer)">撤回</a>
+      </nz-tag>
+      <nz-tag nzColor="default" (click)="getLatestAuditStatus(authorizer)">
+        查看
+      </nz-tag>
+    </td>
+    <td nzRight>
+      <nz-tag nzColor="default">
+        <a nz-popconfirm nzPopconfirmTitle="确定要删除吗?" (nzOnConfirm)="deleteById(authorizer)">删除</a>
+      </nz-tag>
+      <nz-tag nzColor="default">
+        <a nz-popconfirm nzPopconfirmTitle="确定要同步吗?" (nzOnConfirm)="updateAuthorizerInfo(authorizer)">同步</a>
+      </nz-tag>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total> 总共 {{tableParams.total}} 条记录</ng-template>

@@ -1,0 +1,17 @@
+<div style="border-bottom: 1px solid rgb(233, 233, 233); padding-bottom: 15px">
+  <label
+    nz-checkbox
+    [(ngModel)]="allChecked"
+    (ngModelChange)="updateAllChecked()"
+    [nzIndeterminate]="indeterminate"
+  >
+    全选
+  </label>
+</div>
+<nz-checkbox-wrapper style="width: 100%; margin-top: 15px" (nzOnChange)="updateChecked($event)">
+  <div nz-row>
+    <div nz-col nzSpan="24" *ngFor="let privacy of privacyList">
+      <label nz-checkbox [nzValue]="privacy.id" [ngModel]="privacy.checked">{{privacy.privacyDesc}}</label>
+    </div>
+  </div>
+</nz-checkbox-wrapper>

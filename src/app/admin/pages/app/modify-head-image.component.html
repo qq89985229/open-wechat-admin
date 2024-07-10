@@ -1,0 +1,20 @@
+<nz-form-item>
+  <nz-form-label [nzSpan]="6">资质文件</nz-form-label>
+  <nz-form-control [nzSpan]="14">
+    <p>新头像不允许涉及政治敏感与色情;
+      图片格式必须为：png,bmp,jpeg,jpg,gif；不可大于2M；建议使用png格式图片，以保持最佳效果；建议图片尺寸为144px*144px</p>
+    <nz-upload
+      nzName="file"
+      [nzAction]="uploadUrl"
+      [nzData]="{appId: accountBasicInfo.appId}"
+      [nzFileList]="fileList"
+      [nzBeforeUpload]="beforeUpload"
+      (nzChange)="uploadFile($event)"
+    >
+      <button nz-button>
+        <span nz-icon nzType="upload"></span>
+        上传
+      </button>
+    </nz-upload>
+  </nz-form-control>
+</nz-form-item>

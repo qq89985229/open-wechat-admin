@@ -1,0 +1,46 @@
+<div nz-row [nzGutter]="12" nzJustify="end" class="btn-group">
+  <div nz-col>
+    <button nz-button (click)="edit({});"><i nz-icon nzType="plus"></i>新增</button>
+  </div>
+  <div nz-col>
+    <button nz-button><i nz-icon nzType="reload"></i>刷新</button>
+  </div>
+</div>
+<nz-table #basicTable nzBordered [nzData]="privacyList" [nzShowPagination]="false">
+  <thead>
+  <tr>
+    <th>privacy_key</th>
+    <th>privacy_text</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let privacy of basicTable.data">
+    <td>{{ privacy.privacyKey }}</td>
+    <td>{{ privacy.privacyDesc }}</td>
+    <td>
+      <nz-space>
+        <button
+          *nzSpaceItem
+          nz-button
+          nzType="primary"
+          (click)="edit(privacy)"
+        >
+          <i nz-icon nzType="edit"></i>
+        </button>
+        <button
+          *nzSpaceItem
+          nz-button
+          nzType="primary"
+          nzDanger
+          nz-popconfirm
+          nzPopconfirmTitle="确定要删除吗"
+          (nzOnConfirm)="delete(privacy)"
+        >
+          <i nz-icon nzType="delete"></i>
+        </button>
+      </nz-space>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

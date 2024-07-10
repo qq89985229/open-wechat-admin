@@ -1,0 +1,33 @@
+<nz-table #basicTable nzBordered [nzData]="templates" [nzShowPagination]="false">
+  <thead>
+  <tr>
+    <th>版本号</th>
+    <th>草稿ID</th>
+    <th>模版描述</th>
+    <th>提交时间</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let template of basicTable.data">
+    <td>{{ template.userVersion }}</td>
+    <td>{{ template.draftId }}</td>
+    <td>{{ template.userDesc }}</td>
+    <td>{{ template.createTime * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+    <td>
+      <nz-space>
+        <button
+          *nzSpaceItem
+          nz-button
+          nzType="primary"
+          nz-popconfirm
+          nzPopconfirmTitle="确定要添加吗"
+          (nzOnConfirm)="addTemplate(template)"
+        >
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </nz-space>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

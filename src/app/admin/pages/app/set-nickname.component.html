@@ -1,0 +1,14 @@
+<form nz-form [formGroup]="validateForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>小程序名称</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="请输入小程序名称!">
+      <nz-input-group [nzAddOnAfter]="suffixButton">
+        <input type="text" nz-input formControlName="nickname" placeholder="请输入小程序名称" />
+      </nz-input-group>
+      <ng-template #suffixButton>
+        <span *ngIf="!nicknameAvailable" (click)="checkNickname();">名称检测</span>
+        <span *ngIf="nicknameAvailable" class="text-green">名称可用</span>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>

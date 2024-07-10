@@ -1,0 +1,54 @@
+<nz-form-item>
+  <nz-form-label [nzSpan]="6">服务类目</nz-form-label>
+  <nz-form-control [nzSpan]="14">
+    <nz-cascader
+      [nzOptions]="options"
+      [(ngModel)]="values"
+      [nzShowSearch]="true"
+      (ngModelChange)="onChanges($event)"
+    ></nz-cascader>
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item *ngIf="allCategory.scope">
+  <nz-form-label [nzSpan]="6">适用范围</nz-form-label>
+  <nz-form-control [nzSpan]="14">
+    <nz-alert nzType="info" [nzMessage]="this.allCategory.scope"></nz-alert>
+  </nz-form-control>
+</nz-form-item>
+<ng-container *ngIf="allCategory.sensitive_type === 1">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">选择资质</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <nz-radio-group>
+         <label *ngFor="let exter of allCategory.qualify.exter_list" nz-radio [nzValue]="exter.inner_list" (click)="setCertificates(exter.inner_list)">
+             <div *ngFor="let inner of exter.inner_list, let i = index;">{{i + 1}}、{{inner.name}} <a nz-button nzType="link" *ngIf="inner.url" (click)="openUrl(inner.url)">查看示例</a></div>
+         </label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngFor="let item of addCategory.category.certicates">
+    <nz-form-label [nzSpan]="6">资质文件</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <p>{{item.key}}</p>
+      <nz-upload
+        nzName="file"
+        [nzAction]="uploadUrl"
+        [nzData]="{appId: authorizer.appId}"
+        [nzFileList]="item.fileList"
+        [nzBeforeUpload]="beforeUpload"
+        (nzChange)="uploadFile($event, item.index)"
+      >
+        <button nz-button>
+          <span nz-icon nzType="upload"></span>
+          上传
+        </button>
+      </nz-upload>
+    </nz-form-control>
+  </nz-form-item>
+</ng-container>
+
+
+
+
+
+

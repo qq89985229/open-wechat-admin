@@ -1,0 +1,10 @@
+<nz-list nzItemLayout="vertical">
+  @for (tester of testerList; track tester) {
+    <nz-list-item>
+      <nz-list-item-meta-title>
+        {{ tester.userstr }}
+      </nz-list-item-meta-title>
+      <a nz-popconfirm nzPopconfirmTitle="确定要解除绑定吗?" (nzOnConfirm)="unbindTester(tester.userstr)">删除</a>
+    </nz-list-item>
+  }
+</nz-list>

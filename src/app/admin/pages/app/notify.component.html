@@ -1,0 +1,46 @@
+<div nz-row [nzGutter]="12" nzJustify="end" class="btn-group">
+  <div nz-col>
+    <button nz-button><i nz-icon nzType="search"></i>搜索</button>
+  </div>
+  <div nz-col>
+    <button nz-button (click)="getList()"><i nz-icon nzType="reload"></i>刷新</button>
+  </div>
+</div>
+<nz-table #basicTable
+          nzBordered
+          nzShowSizeChanger
+          [nzFrontPagination]="false"
+          [nzLoading]="tableParams.loading"
+          [nzTotal]="tableParams.total"
+          [nzPageIndex]="tableParams.pageIndex"
+          [nzPageSize]="tableParams.pageSize"
+          [nzPageSizeOptions]="tableParams.nzPageSizeOptions"
+          [nzShowTotal]="totalTemplate"
+          [nzData]="notifyList"
+          [nzScroll]="{x: '1200px', y: '500px'}"
+          (nzQueryParams)="onQueryParamsChange($event)"
+>
+  <thead>
+  <tr>
+    <th nzLeft>APPID</th>
+    <th>通知类型</th>
+    <th>内容</th>
+    <th>创建时间</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let notify of basicTable.data">
+    <td nzLeft>{{ notify.appId }}</td>
+    <td [ngSwitch]="notify.infoType">
+      <span *ngSwitchCase="'authorized'">授权成功</span>
+      <span *ngSwitchCase="'unauthorized'">取消授权</span>
+      <span *ngSwitchCase="'weapp_audit_success'">审核通过</span>
+      <span *ngSwitchCase="'weapp_audit_fail'">审核不通过</span>
+      <span *ngSwitchCase="'weapp_audit_delay'">审核延后</span>
+    </td>
+    <td nzLeft>{{ notify.message }}</td>
+    <td nzRight>{{ notify.createdAt ?? (notify.createdAt | date:'yyyy-MM-dd HH:mm:ss') }}</td>
+  </tr>
+  </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total> 总共 {{tableParams.total}} 条记录</ng-template>

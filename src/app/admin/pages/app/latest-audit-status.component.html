@@ -1,0 +1,40 @@
+<nz-table *ngIf="latestAuditStatus.auditId" #basicTable [nzWidthConfig] ="['120px']" [nzData]="[latestAuditStatus]" [nzShowPagination]="false">
+  <tbody>
+  <tr>
+    <td>最新的审核id</td>
+    <td>{{basicTable.data[0].auditId}}</td>
+  </tr>
+  <tr>
+    <td>审核版本</td>
+    <td>{{basicTable.data[0].userVersion}}</td>
+  </tr>
+  <tr>
+    <td>版本描述</td>
+    <td>{{basicTable.data[0].userDesc}}</td>
+  </tr>
+  <tr>
+    <td>时间</td>
+    <td>{{basicTable.data[0].submitAuditTime * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+  </tr>
+  <tr>
+    <td>审核状态</td>
+    <td [ngSwitch]="basicTable.data[0].status">
+      <span *ngSwitchCase="0">审核成功</span>
+      <span *ngSwitchCase="1">审核被拒绝</span>
+      <span *ngSwitchCase="2">审核中</span>
+      <span *ngSwitchCase="3">已撤回</span>
+      <span *ngSwitchCase="4">审核延后</span>
+    </td>
+  </tr>
+  <tr *ngIf="basicTable.data[0].reason">
+    <td>拒绝原因</td>
+    <td>{{ basicTable.data[0].reason }}</td>
+  </tr>
+  <tr *ngIf="basicTable.data[0].screenShot">
+    <td>拒绝原因</td>
+    <td>
+      <nz-tag *ngFor="let mediaId of (basicTable.data[0].screenShot || '').split('|')" (click)="openUrl(mediaId)">查看</nz-tag>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
